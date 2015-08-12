@@ -2,11 +2,13 @@
 var hapi = require('hapi');
 
 // Create a server object, Establish a server connection.
-var server = new hapi.Server();
+var server = module.exports = new hapi.Server();
 
 server.connection({ port:2001 });
 
 require('./database');
+
+require('./modules/user');
 
 // Start the server.
 server.start(function () {

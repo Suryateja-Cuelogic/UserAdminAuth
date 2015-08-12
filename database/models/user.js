@@ -8,7 +8,8 @@ var UserSchema = new Schema({
 	last_name: String,
 	username: { type: String, required: true, index: { unique: true } },
 	password: { type: String, required: true },
-	email: { type: String, required: true, index: { unique: true} }
+	email: { type: String, required: true, index: { unique: true} },
+	role: { type: String, required: true}
 });
 
 UserSchema.pre('save', function(next) {
@@ -25,8 +26,6 @@ UserSchema.pre('save', function(next) {
 	    bcrypt.hash(user.password, salt, function(err, hash) {
 	        if (err) return next(err);
 	        // override the cleartext password with the hashed one
-	        console.log(user.password);
-	        console.log(hash);
 	        user.password = hash;
 	        next();
 	    });
@@ -42,6 +41,9 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
     });
 };
 
+module.exports = mongoose.model('User', UserSchema);
+
+/*
 var User = mongoose.model('User', UserSchema);
 
 var userCollection = new User({
@@ -49,7 +51,8 @@ var userCollection = new User({
 	last_name: "Suryateja",
 	username: "surya@cue",
 	password: '123456',
-	email: "suryateja.mahidhara@cuelogic.co.in"
+	email: "suryateja.mahidhara@cuelogic.co.in",
+	role: "admin"
 });
 
 // save user to database
@@ -74,6 +77,7 @@ userCollection.save(function(err) {
 	});
 });
 
+*/
 
 
 

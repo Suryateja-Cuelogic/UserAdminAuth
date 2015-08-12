@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-exports.models = require('./models/user');
+require('./models/user');
 
 // Connect mongoDB with mongoose.
 mongoose.connect("mongodb://localhost/UserAdminAuth");
