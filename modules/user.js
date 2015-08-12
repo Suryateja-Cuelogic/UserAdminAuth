@@ -1,37 +1,7 @@
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
-    server = require('../app');
-/*
-var userCollection = new User({
-	first_name: "Mahidhara",
-	last_name: "Suryateja",
-	username: "surya@cue",
-	password: '123456',
-	email: "suryateja.mahidhara@cuelogic.co.in",
-	role: "admin"
-}); 
-
-// save user to database
-userCollection.save(function(err) {
-    if (err) throw err;
-
-	// fetch user and test password verification
-	User.findOne({ username: 'surya@cue' }, function(err, user) {
-	    if (err) throw err;
-
-	    // test a matching password
-	    user.comparePassword('123456', function(err, isMatch) {
-	        if (err) throw err;
-	        console.log('123456:', isMatch); // -&gt; 123456: true
-	    });
-
-	    // test a failing password
-	    user.comparePassword('123456', function(err, isMatch) {
-	        if (err) throw err;
-	        console.log('123456:', isMatch); // -&gt; 123456: false
-	    });
-	});
-}); */
+    server = require('../app'),
+    joi = require('joi');
 
 // Build post route to add new users
 
@@ -49,6 +19,18 @@ server.route({
 				reply(user);
 			}
 		});
+	},
+	config: {
+		validate: {
+			payload: {
+				first_name: joi.string().min(3).max(15).required(),
+				last_name: joi.string(),
+				username: joi.string().alphanum().min(3).max(10).required(),
+				password: joi.string().min(3).max(10),
+				email: joi.string().email(),
+				role: joi.string()
+			}
+		}
 	}
 });
 
@@ -88,6 +70,13 @@ server.route({
 					reply (error);
 				}
 			});
+	},
+	config: {
+		validate: {
+			params: {
+				id: joi.string().alphanum()
+			}
+		}
 	}
 });
 
@@ -122,6 +111,21 @@ server.route({
 					reply (error);
 				}
 			});
+	},
+	config: {
+		validate: {
+			payload: {
+				first_name: joi.string().min(3).max(15).required(),
+				last_name: joi.string().min(3).max(15),
+				username: joi.string().alphanum().min(3).max(10).required(),
+				password: joi.string().min(3).max(10),
+				email: joi.string().email(),
+				role: joi.string()
+			},
+			params: {
+				id: joi.string().alphanum()
+			}
+		}
 	}
 });
 
@@ -150,5 +154,12 @@ server.route({
 					reply (error);
 				}
 			});
+	},
+	config: {
+		validate: {
+			params: {
+				id: joi.string().alphanum()
+			}
+		}
 	}
 });
