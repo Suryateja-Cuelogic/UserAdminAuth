@@ -43,41 +43,5 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
 
 module.exports = mongoose.model('User', UserSchema);
 
-/*
-var User = mongoose.model('User', UserSchema);
-
-var userCollection = new User({
-	first_name: "Mahidhara",
-	last_name: "Suryateja",
-	username: "surya@cue",
-	password: '123456',
-	email: "suryateja.mahidhara@cuelogic.co.in",
-	role: "admin"
-});
-
-// save user to database
-userCollection.save(function(err) {
-    if (err) throw err;
-
-	// fetch user and test password verification
-	User.findOne({ username: 'surya@cue' }, function(err, user) {
-	    if (err) throw err;
-
-	    // test a matching password
-	    user.comparePassword('123456', function(err, isMatch) {
-	        if (err) throw err;
-	        console.log('123456:', isMatch); // -&gt; 123456: true
-	    });
-
-	    // test a failing password
-	    user.comparePassword('123456', function(err, isMatch) {
-	        if (err) throw err;
-	        console.log('123456:', isMatch); // -&gt; 123456: false
-	    });
-	});
-});
-
-*/
-
 
 
